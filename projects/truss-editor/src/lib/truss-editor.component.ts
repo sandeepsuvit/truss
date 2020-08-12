@@ -14,7 +14,7 @@ export class TrussEditorComponent implements OnInit, AfterViewInit {
   @Input() nodes: INode[];
 
   // Container for setting the workspace dimension
-  workspaceDimensions: DOMRect;
+  workspaceRect: DOMRect;
 
   constructor(
     private trussContext: TrussContextService,
@@ -48,8 +48,8 @@ export class TrussEditorComponent implements OnInit, AfterViewInit {
    * @param {DOMRect} rect
    * @memberof TrussEditorComponent
    */
-  handleUpdateWorkspaceDimensions(rect: DOMRect) {
+  handleUpdateWorkspaceRect(rect: DOMRect) {
     console.log(rect);
-    this.workspaceDimensions = rect;
+    this.workspaceRect = rect;
   }
 }

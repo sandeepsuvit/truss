@@ -1,6 +1,6 @@
 <div #workspace id="__truss_workspace__" class="wrapper">
     <ng-container *ngFor="let item of nodes | keyvalue">
-        <lib-node [workspaceDimensions]="workspaceDimensions" [id]="item.key" [width]="item.value.width" [height]="item.value.height" [x]="item.value.x" [y]="item.value.y" [type]="item.value.type"></lib-node>
+        <lib-node [workspaceRect]="workspaceRect" [id]="item.key" [width]="item.value.width" [height]="item.value.height" [x]="item.value.x" [y]="item.value.y" [type]="item.value.type" (onDrag)="handleOnDrag($event)" (onDragEnd)="handleOnDragEnd($event)"></lib-node>
     </ng-container>
 
 </div>

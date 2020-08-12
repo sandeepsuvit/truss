@@ -1,4 +1,5 @@
-<div class="wrapper" [ngStyle]="{width: width, height: height, left: x, top: y}">
+<div #nodeWrapper class="wrapper" [ngStyle]="{width: resolveToPixes(width), left:  resolveToPixes(coordinates.x), top: resolveToPixes(coordinates.y)}">
     <h2 class="label">{{label}}</h2>
+    {{resolveToPixes(coordinates.x)}} - {{resolveToPixes(coordinates.y)}}
     <lib-io-port></lib-io-port>
 </div>

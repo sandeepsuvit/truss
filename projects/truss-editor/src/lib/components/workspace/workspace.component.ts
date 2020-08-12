@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'lib-workspace',
@@ -6,32 +6,66 @@ import { Component, OnInit, Input, ViewChild, AfterViewInit, ElementRef, Output,
   styleUrls: ['./workspace.component.scss']
 })
 export class WorkspaceComponent implements OnInit, AfterViewInit {
-  @ViewChild('workspace') workspaceRef: ElementRef;
+  @ViewChild('workspace', { static: true }) workspaceRef: ElementRef;
 
   @Input() id: any; // Unique identifier
   @Input() nodes = [];
 
-  @Output() updateWorkspaceDimensions = new EventEmitter<DOMRect>();
+  @Output() updateWorkspaceRect = new EventEmitter<DOMRect>();
 
   workspace: HTMLElement;
-  workspaceDimensions: DOMRect;
+  workspaceRect: DOMRect;
 
   constructor(
     private cdref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.initWorkspace();
   }
 
   ngAfterViewInit() {
-    this.workspace = this.workspaceRef.nativeElement;
-
-    // Update the parent with the information of the workspace dimensions
-    this.workspaceDimensions = this.workspace.getBoundingClientRect();
-    this.updateWorkspaceDimensions.emit(this.workspaceDimensions);
+    // this.initWorkspace();
 
     // Trigger change detection so that `workspaceDimensions` data update
     // doesn't throw change detection error
-    this.cdref.detectChanges();
+    // this.cdref.detectChanges();
+  }
+
+  /**
+   * Initialize workspace context
+   *
+   * @memberof WorkspaceComponent
+   */
+  initWorkspace() {
+    this.workspace = this.workspaceRef.nativeElement;
+
+    // Update the parent with the information of the workspace dimensions
+    this.workspaceRect = this.workspace.getBoundingClientRect();
+    this.updateWorkspaceRect.emit(this.workspaceRect);
+  }
+
+  /**
+   * Handle dragging event
+   *
+   * @param {boolean} enabled
+   * @memberof WorkspaceComponent
+   */
+  handleOnDrag(enabled: boolean) {
+    if (enabled) {
+      console.log('Handling drag...');
+    }
+  }
+
+  /**
+   * Handle drag end event
+   *
+   * @param {boolean} enabled
+   * @memberof WorkspaceComponent
+   */
+  handleOnDragEnd(enabled: boolean) {
+    if (enabled) {
+      console.log('Handling drag end...');
+    }
   }
 }
