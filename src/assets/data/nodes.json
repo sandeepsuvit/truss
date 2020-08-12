@@ -1,0 +1,52 @@
+{
+    "io3daf9": {
+        "id": "io3daf9",
+        "type": "output",
+        "x": 900,
+        "y": 240,
+        "width": 200,
+        "height": 300,
+        "connections": {
+            "visible": {
+                "nodeId": "vmkld29",
+                "portName": "output"
+            },
+            "disabled": {
+                "nodeId": "alkjlnq",
+                "portName": "output"
+            },
+            "hideFieldOnForm": {
+                "nodeId": "rriwo92",
+                "portName": "output"
+            },
+            "required": {
+                "nodeId": "alkjlnq",
+                "portName": "output"
+            }
+        }
+    },
+    "rriwo92": {
+        "id": "rriwo92",
+        "type": "fieldValueEquals",
+        "x": 550,
+        "y": 500,
+        "width": 200,
+        "height": 300
+    },
+    "alkjlnq": {
+        "id": "alkjlnq",
+        "type": "fieldValueEquals",
+        "x": 400,
+        "y": 350,
+        "width": 200,
+        "height": 300
+    },
+    "vmkld29": {
+        "id": "vmkld29",
+        "type": "fieldValueEquals",
+        "x": 550,
+        "y": 200,
+        "width": 200,
+        "height": 300
+    }
+}
