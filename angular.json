@@ -123,6 +123,46 @@
           }
         }
       }
+    },
+    "truss-editor": {
+      "projectType": "library",
+      "root": "projects/truss-editor",
+      "sourceRoot": "projects/truss-editor/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/truss-editor/tsconfig.lib.json",
+            "project": "projects/truss-editor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/truss-editor/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/truss-editor/src/test.ts",
+            "tsConfig": "projects/truss-editor/tsconfig.spec.json",
+            "karmaConfig": "projects/truss-editor/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/truss-editor/tsconfig.lib.json",
+              "projects/truss-editor/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "truss"
 }
