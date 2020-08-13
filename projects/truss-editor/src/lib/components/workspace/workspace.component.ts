@@ -6,7 +6,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, 
   styleUrls: ['./workspace.component.scss']
 })
 export class WorkspaceComponent implements OnInit, AfterViewInit {
-  @ViewChild('workspace', { static: true }) workspaceRef: ElementRef;
+  @ViewChild('workspace', { read: ElementRef, static: true }) workspaceRef: ElementRef;
 
   @Input() id: any; // Unique identifier
   @Input() nodes = [];
@@ -43,6 +43,10 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
     // Update the parent with the information of the workspace dimensions
     this.workspaceRect = this.workspace.getBoundingClientRect();
     this.updateWorkspaceRect.emit(this.workspaceRect);
+  }
+
+  private recalculateConnections = () => {
+    
   }
 
   /**

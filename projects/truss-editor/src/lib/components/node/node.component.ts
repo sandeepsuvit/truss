@@ -24,6 +24,8 @@ export class NodeComponent implements OnInit {
 
   // Custom properties
   label: string;
+  inputs = [];
+  outputs = [];
   offset: any;
   coordinates: ICoordinates = null;
   startCoordinates: ICoordinates = null;
@@ -56,6 +58,8 @@ export class NodeComponent implements OnInit {
   initNode(nodeTypes: any) {
     const { label, inputs = [], outputs = [] } = nodeTypes[this.type];
     this.label = label;
+    this.inputs = inputs;
+    this.outputs = outputs;
   }
 
   /**
@@ -95,8 +99,8 @@ export class NodeComponent implements OnInit {
    * @memberof NodeComponent
    */
   private stopDragDelay = () => {
-    document.removeEventListener('mouseup', this.stopDragDelay);
     document.removeEventListener('mousemove', this.listenToDragEvent);
+    document.removeEventListener('mouseup', this.stopDragDelay);
 
     // Reset the coordinates
     this.startCoordinates = null;
@@ -115,8 +119,9 @@ export class NodeComponent implements OnInit {
     this.updateCoordinates(event);
     this.isDragging = true;
 
-    window.addEventListener('mouseup', this.stopDrag);
+    // Register event listeners
     window.addEventListener('mousemove', this.updateCoordinates);
+    window.addEventListener('mouseup', this.stopDrag);
   }
 
   /**
@@ -143,8 +148,8 @@ export class NodeComponent implements OnInit {
    */
   private stopDrag = (event: any) => {
     this.isDragging = false;
-    window.removeEventListener('mouseup', this.stopDrag);
     window.removeEventListener('mousemove', this.updateCoordinates);
+    window.removeEventListener('mouseup', this.stopDrag);
 
     // This will call the parent function to update the coordinates in the parent
     this.onDragEnd.emit(true);
@@ -173,8 +178,9 @@ export class NodeComponent implements OnInit {
 
     this.startCoordinates = { x, y };
 
-    document.addEventListener('mouseup', this.stopDragDelay);
+    // Register event listeners
     document.addEventListener('mousemove', this.listenToDragEvent);
+    document.addEventListener('mouseup', this.stopDragDelay);
 
     // Touch event listeners
     // document.addEventListener('touchend', this.stopDragDelay);

@@ -1,0 +1,32 @@
+.transput {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    &:first-child {
+        margin-top: 0px;
+    }
+}
+
+.transput {
+    &:first-child {
+        .portLabel,
+        .port {
+            margin-top: 5px;
+        }
+    }
+    &:last-child {
+        .portLabel,
+        .port {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.portLabel {
+    font-size: 14px;
+}
+
+.input-port {
+    margin-left: -16px;
+    margin-right: 16px;
+}

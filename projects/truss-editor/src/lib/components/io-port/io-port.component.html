@@ -1,4 +1,12 @@
 <div class="wrapper">
-    <div class="input"></div>
-    <div class="output"></div>
+    <div class="inputs">
+        <ng-container *ngFor="let input of inputs">
+            <lib-input [name]="input.name" [type]="input.type" [label]="input.label"></lib-input>
+        </ng-container>
+    </div>
+    <div class="outputs" *ngIf="outputs?.length>0">
+        <ng-container *ngFor="let output of outputs">
+            <lib-output [name]="output.name" [label]="output.label"></lib-output>
+        </ng-container>
+    </div>
 </div>

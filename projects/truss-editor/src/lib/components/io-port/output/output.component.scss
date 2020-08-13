@@ -1,0 +1,21 @@
+.transput {
+    &:last-child {
+        .portLabel,
+        .port {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.transput {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    &:first-child {
+        margin-top: 0px;
+    }
+}
+
+.portLabel {
+    font-size: 14px;
+}

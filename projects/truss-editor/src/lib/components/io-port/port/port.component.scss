@@ -1,0 +1,24 @@
+.port {
+    width: 12px;
+    height: 12px;
+    margin-left: -11px;
+    margin-right: 5px;
+    background: linear-gradient(to bottom, #acb1b4, #919699);
+    border-radius: 100%;
+    flex: 0 0 auto;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, .6);
+    &:last-child {
+        margin-right: -11px;
+        margin-left: 5px;
+        margin-top: -5px;
+    }
+    &[data-port-color="purple"] {
+        background: linear-gradient(to bottom, #7e60e0, #553fa7);
+    }
+    &[data-port-color="blue"] {
+        background: linear-gradient(to bottom, #47a1d6, #23709d);
+    }
+    &[data-port-color="green"] {
+        background: linear-gradient(to bottom, #47d680, #239d75);
+    }
+}

@@ -1,5 +1,8 @@
 <div #nodeWrapper class="wrapper" [ngStyle]="{width: resolveToPixes(width), left:  resolveToPixes(coordinates.x), top: resolveToPixes(coordinates.y)}">
-    <h2 class="label">{{label}}</h2>
-    {{resolveToPixes(coordinates.x)}} - {{resolveToPixes(coordinates.y)}}
-    <lib-io-port></lib-io-port>
+    <h2 class="label">
+        {{label}}<br/>
+        <span>{{resolveToPixes(coordinates.x)}} - {{resolveToPixes(coordinates.y)}}</span>
+    </h2>
+
+    <lib-io-port [inputs]="inputs" [outputs]="outputs"></lib-io-port>
 </div>
