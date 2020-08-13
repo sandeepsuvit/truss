@@ -1,7 +1,7 @@
-<div #nodeWrapper class="wrapper" [ngStyle]="{width: resolveToPixes(width), left:  resolveToPixes(coordinates.x), top: resolveToPixes(coordinates.y)}" [attr.data-node-id]="id">
+<div #nodeWrapper class="wrapper" [ngStyle]="{width: resolveToPixels(width), left:  resolveToPixels(coordinates.x), top: resolveToPixels(coordinates.y)}" [attr.data-node-id]="id">
     <h2 class="label">
         {{label}}<br/>
-        <span>{{resolveToPixes(coordinates.x)}} - {{resolveToPixes(coordinates.y)}}</span>
+        <!-- <span>{{resolveToPixels(coordinates.x)}} - {{resolveToPixels(coordinates.y)}}</span> -->
     </h2>
 
     <lib-io-port [inputs]="inputs" [outputs]="outputs"></lib-io-port>

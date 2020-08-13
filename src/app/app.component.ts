@@ -128,21 +128,31 @@ export class AppComponent {
       width: 200,
       height: 300,
       connections: {
-        visible: {
-          nodeId: 'vmkld29',
-          portName: 'output'
-        },
-        disabled: {
-          nodeId: 'alkjlnq',
-          portName: 'output'
-        },
-        hideFieldOnForm: {
-          nodeId: 'rriwo92',
-          portName: 'output'
-        },
-        required: {
-          nodeId: 'alkjlnq',
-          portName: 'output'
+        inputs: {
+          visible: [
+            {
+              nodeId: 'vmkld29',
+              portName: 'output'
+            }
+          ],
+          disabled: [
+            {
+              nodeId: 'alkjlnq',
+              portName: 'output'
+            }
+          ],
+          hideFieldOnForm: [
+            {
+              nodeId: 'rriwo92',
+              portName: 'output'
+            }
+          ],
+          required: [
+            {
+              nodeId: 'alkjlnq',
+              portName: 'output'
+            }
+          ]
         }
       }
     },
@@ -152,7 +162,17 @@ export class AppComponent {
       x: 550,
       y: 500,
       width: 200,
-      height: 300
+      height: 300,
+      connections: {
+        outputs: {
+          output: [
+            {
+              nodeId: 'io3daf9',
+              portName: 'hideFieldOnForm'
+            }
+          ]
+        }
+      }
     },
     alkjlnq: {
       id: 'alkjlnq',
@@ -160,7 +180,21 @@ export class AppComponent {
       x: 400,
       y: 350,
       width: 200,
-      height: 300
+      height: 300,
+      connections: {
+        outputs: {
+          output: [
+            {
+              nodeId: 'io3daf9',
+              portName: 'disabled'
+            },
+            {
+              nodeId: 'io3daf9',
+              portName: 'required'
+            }
+          ]
+        }
+      }
     },
     vmkld29: {
       id: 'vmkld29',
@@ -168,7 +202,17 @@ export class AppComponent {
       x: 550,
       y: 200,
       width: 200,
-      height: 300
+      height: 300,
+      connections: {
+        outputs: {
+          output: [
+            {
+              nodeId: 'io3daf9',
+              portName: 'visible'
+            }
+          ]
+        }
+      }
     }
   };
 }

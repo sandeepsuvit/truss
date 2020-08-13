@@ -1,13 +1,17 @@
 <div #workspace id="__truss_workspace__" class="wrapper">
     <ng-container *ngFor="let item of nodes | keyvalue">
-        <lib-node [workspaceRect]="workspaceRect" [id]="item.key" [width]="item.value.width" [height]="item.value.height" [x]="item.value.x" [y]="item.value.y" [type]="item.value.type" (onDrag)="handleOnDrag($event)" (onDragEnd)="handleOnDragEnd($event)"></lib-node>
+        <lib-node [workspaceRect]="workspaceRect" [id]="item.key" [width]="item.value.width" [height]="item.value.height" [x]="item.value.x" [y]="item.value.y" [connections]="item.value.connections" [type]="item.value.type"></lib-node>
     </ng-container>
 
     <!-- Render the connections -->
     <ng-container *ngIf="portRects">
-        <ng-container *ngFor="let nodeItem of nodes | keyvalue">
-            <ng-container *ngFor="let connItem of nodeItem.value.connections || {} | keyvalue">
-                <lib-connection [from]="getFrom(nodeItem.value, connItem)" [to]="getTo(nodeItem.value, connItem)"></lib-connection>
+        <ng-container *ngFor="let nodeObj of nodes | keyvalue">
+            <ng-container *ngIf="nodeObj.value.connections?.inputs">
+                <ng-container *ngFor="let connObj of nodeObj.value.connections.inputs || {} | keyvalue">
+                    <ng-container *ngFor="let conn of connObj.value">
+                        <lib-connection [from]="getConnFrom(conn)" [to]="getConnTo(nodeObj.value, connObj.key)" [id]="getConnId(nodeObj.value, connObj.key, conn)"></lib-connection>
+                    </ng-container>
+                </ng-container>
             </ng-container>
         </ng-container>
     </ng-container>

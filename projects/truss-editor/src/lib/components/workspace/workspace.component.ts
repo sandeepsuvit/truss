@@ -1,3 +1,4 @@
+import { getPortRectsByNodes, getPortRect } from './../../utils/connection-calculator.util';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
@@ -56,65 +57,34 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
    * @memberof WorkspaceComponent
    */
   private recalculateConnections = () => {
-    const portRects = Object.values(this.nodes).reduce((obj, node) => {
-      if (node.connections) {
-        Object.entries(node.connections).forEach(([inputName, output]) => {
-          obj[node.id + inputName] = document
-            .querySelector(
-              `[data-node-id="${node.id}"] [data-port-name="${inputName}"]`
-            )
-            .getBoundingClientRect();
-          obj[output[`nodeId`] + output[`portName`]] = document
-            .querySelector(
-              `[data-node-id="${output[`nodeId`]}"] [data-port-name="${output[`portName`]}"]`
-            )
-            .getBoundingClientRect();
-        });
-      }
-      return obj;
-    }, {});
+    const portRects = getPortRectsByNodes(this .nodes);
 
     // Update the port rect coordinates
     this.portRects = portRects;
-    console.log(this.portRects);
   }
 
   /**
-   * Handle dragging event
-   *
-   * @param {boolean} enabled
-   * @memberof WorkspaceComponent
-   */
-  handleOnDrag(enabled: boolean) {
-    if (enabled) {
-      // console.log('Handling drag...');
-      this.recalculateConnections();
-    }
-  }
-
-  /**
-   * Handle drag end event
-   *
-   * @param {boolean} enabled
-   * @memberof WorkspaceComponent
-   */
-  handleOnDragEnd(enabled: boolean) {
-    if (enabled) {
-      // console.log('Handling drag end...');
-      this.recalculateConnections();
-    }
-  }
-
-  /**
-   * Get the connection from node
+   * Get connection id
    *
    * @param {*} node
    * @param {*} connection
    * @returns
    * @memberof WorkspaceComponent
    */
-  getFrom(node: any, connection: any) {
-    const fromPort = this.portRects[connection.value.nodeId + connection.value.portName];
+  getConnId(node: any, key: string, connection: any) {
+    return `${connection.nodeId}${connection.portName}${node.id}${key}`;
+  }
+
+  /**
+   * Get the connection from node
+   *
+   * @param {*} connection
+   * @returns
+   * @memberof WorkspaceComponent
+   */
+  getConnFrom(connection: any) {
+    const fromPort = this.portRects[`${connection.nodeId}${connection.portName}`];
+    // Place the line inside the port boundary
     const fromHalf = fromPort.width / 2;
 
     return {
@@ -131,8 +101,8 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
    * @returns
    * @memberof WorkspaceComponent
    */
-  getTo(node: any, connection: any) {
-    const toPort = this.portRects[node.id + connection.key];
+  getConnTo(node: any, key: string) {
+    const toPort = this.portRects[`${node.id}${key}`];
     const toHalf = toPort.width / 2;
 
     return {
