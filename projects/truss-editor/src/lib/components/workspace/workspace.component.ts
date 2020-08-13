@@ -16,6 +16,8 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
   workspace: HTMLElement;
   workspaceRect: DOMRect;
 
+  portRects: DOMRect;
+
   constructor(
     private cdref: ChangeDetectorRef
   ) { }
@@ -27,9 +29,11 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // this.initWorkspace();
 
+    this.recalculateConnections();
+
     // Trigger change detection so that `workspaceDimensions` data update
     // doesn't throw change detection error
-    // this.cdref.detectChanges();
+    this.cdref.detectChanges();
   }
 
   /**
@@ -45,8 +49,34 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
     this.updateWorkspaceRect.emit(this.workspaceRect);
   }
 
+  /**
+   * Recalculate the connectors coordinates
+   *
+   * @private
+   * @memberof WorkspaceComponent
+   */
   private recalculateConnections = () => {
-    
+    const portRects = Object.values(this.nodes).reduce((obj, node) => {
+      if (node.connections) {
+        Object.entries(node.connections).forEach(([inputName, output]) => {
+          obj[node.id + inputName] = document
+            .querySelector(
+              `[data-node-id="${node.id}"] [data-port-name="${inputName}"]`
+            )
+            .getBoundingClientRect();
+          obj[output[`nodeId`] + output[`portName`]] = document
+            .querySelector(
+              `[data-node-id="${output[`nodeId`]}"] [data-port-name="${output[`portName`]}"]`
+            )
+            .getBoundingClientRect();
+        });
+      }
+      return obj;
+    }, {});
+
+    // Update the port rect coordinates
+    this.portRects = portRects;
+    console.log(this.portRects);
   }
 
   /**
@@ -57,7 +87,8 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
    */
   handleOnDrag(enabled: boolean) {
     if (enabled) {
-      console.log('Handling drag...');
+      // console.log('Handling drag...');
+      this.recalculateConnections();
     }
   }
 
@@ -69,7 +100,44 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
    */
   handleOnDragEnd(enabled: boolean) {
     if (enabled) {
-      console.log('Handling drag end...');
+      // console.log('Handling drag end...');
+      this.recalculateConnections();
     }
+  }
+
+  /**
+   * Get the connection from node
+   *
+   * @param {*} node
+   * @param {*} connection
+   * @returns
+   * @memberof WorkspaceComponent
+   */
+  getFrom(node: any, connection: any) {
+    const fromPort = this.portRects[connection.value.nodeId + connection.value.portName];
+    const fromHalf = fromPort.width / 2;
+
+    return {
+      x: fromPort.x - this.workspaceRect.x + fromHalf,
+      y: fromPort.y - this.workspaceRect.y + fromHalf
+    };
+  }
+
+  /**
+   * Get the connection to node
+   *
+   * @param {*} node
+   * @param {*} connection
+   * @returns
+   * @memberof WorkspaceComponent
+   */
+  getTo(node: any, connection: any) {
+    const toPort = this.portRects[node.id + connection.key];
+    const toHalf = toPort.width / 2;
+
+    return {
+      x: toPort.x - this.workspaceRect.x + toHalf,
+      y: toPort.y - this.workspaceRect.y + toHalf
+    };
   }
 }

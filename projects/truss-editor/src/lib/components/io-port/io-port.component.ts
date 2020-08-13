@@ -12,7 +12,7 @@ export class IoPortComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.outputs);
+    // console.log(this.outputs);
   }
 
 }
