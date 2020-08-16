@@ -1,5 +1,7 @@
-import { getPortRectsByNodes, getPortRect } from './../../utils/connection-calculator.util';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { TrussContextService } from './../../services/truss-context.service';
+import { getPortRectsByNodes } from './../../utils/connection-calculator.util';
+import { addNewConnection } from './../../utils/nodes-reducer.util';
 
 @Component({
   selector: 'lib-workspace',
@@ -7,20 +9,19 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, 
   styleUrls: ['./workspace.component.scss']
 })
 export class WorkspaceComponent implements OnInit, AfterViewInit {
-  @ViewChild('workspace', { read: ElementRef, static: true }) workspaceRef: ElementRef;
+  @ViewChild('workspaceWrapper', { static: true }) workspaceWrapper: ElementRef;
 
   @Input() id: any; // Unique identifier
   @Input() nodes = [];
 
-  @Output() updateWorkspaceRect = new EventEmitter<DOMRect>();
+  @Output() setWorkspaceRect = new EventEmitter<DOMRect>();
 
-  workspace: HTMLElement;
   workspaceRect: DOMRect;
-
   portRects: DOMRect;
 
   constructor(
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
+    private context: TrussContextService,
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +36,20 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
     // Trigger change detection so that `workspaceDimensions` data update
     // doesn't throw change detection error
     this.cdref.detectChanges();
+
+    // Get the details of the new connections
+    this.context.getConnection().subscribe(conn => {
+      const newConn = addNewConnection(this.nodes, conn.input, conn.output);
+
+      this.nodes = newConn;
+
+      // Recalculate connections
+      if (this.context.shouldRecalculateConnections) {
+        this.recalculateConnections();
+        this.context.shouldRecalculateConnections = false;
+      }
+
+    });
   }
 
   /**
@@ -43,11 +58,11 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
    * @memberof WorkspaceComponent
    */
   initWorkspace() {
-    this.workspace = this.workspaceRef.nativeElement;
+    const workspaceRef = this.workspaceWrapper.nativeElement as HTMLElement;
 
     // Update the parent with the information of the workspace dimensions
-    this.workspaceRect = this.workspace.getBoundingClientRect();
-    this.updateWorkspaceRect.emit(this.workspaceRect);
+    this.workspaceRect = workspaceRef.getBoundingClientRect();
+    this.setWorkspaceRect.emit(this.workspaceRect);
   }
 
   /**
@@ -57,7 +72,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
    * @memberof WorkspaceComponent
    */
   private recalculateConnections = () => {
-    const portRects = getPortRectsByNodes(this .nodes);
+    const portRects = getPortRectsByNodes(this.nodes);
 
     // Update the port rect coordinates
     this.portRects = portRects;

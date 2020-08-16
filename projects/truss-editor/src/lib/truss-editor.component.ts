@@ -13,11 +13,8 @@ export class TrussEditorComponent implements OnInit, AfterViewInit {
   @Input() nodeTypes: any;
   @Input() nodes: INode[];
 
-  // Container for setting the workspace dimension
-  workspaceRect: DOMRect;
-
   constructor(
-    private trussContext: TrussContextService,
+    private context: TrussContextService,
   ) { }
 
   ngOnInit(): void {
@@ -38,8 +35,11 @@ export class TrussEditorComponent implements OnInit, AfterViewInit {
    * @memberof TrussEditorComponent
    */
   setTrussContext(inputTypes: any, nodeTypes: any) {
-    this.trussContext.inputTypes = inputTypes;
-    this.trussContext.nodeTypes = nodeTypes;
+    this.context.inputTypes = inputTypes;
+    this.context.nodeTypes = nodeTypes;
+
+    // For refreshing the connections
+    this.context.shouldRecalculateConnections = true;
   }
 
   /**
@@ -48,8 +48,8 @@ export class TrussEditorComponent implements OnInit, AfterViewInit {
    * @param {DOMRect} rect
    * @memberof TrussEditorComponent
    */
-  handleUpdateWorkspaceRect(rect: DOMRect) {
-    console.log(rect);
-    this.workspaceRect = rect;
+  getWorkspaceRect(rect: DOMRect) {
+    // this.workspaceRect = rect;
+    this.context.workspaceRect = rect;
   }
 }

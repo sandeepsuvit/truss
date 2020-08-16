@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class IoPortComponent implements OnInit {
   @Input() inputs = [];
   @Input() outputs = [];
+  @Input() nodeId: any;
 
   constructor() { }
 

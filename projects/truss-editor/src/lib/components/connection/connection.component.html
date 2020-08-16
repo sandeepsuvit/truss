@@ -1,3 +1,3 @@
 <svg class="svg">
-    <line stroke="rgb(185, 186, 189)" strokeWidth=5 [attr.x1]="from.x" [attr.y1]="from.y" [attr.x2]="to.x" [attr.y2]="to.y" [attr.data-connection-id]="id" />
+    <line #lineRef stroke="rgb(185, 186, 189)" [attr.strokeWidth]="strokeWidth" strokeLinecap="round" [attr.x1]="from.x" [attr.y1]="from.y" [attr.x2]="to.x" [attr.y2]="to.y" [attr.data-connection-id]="id" />
 </svg>

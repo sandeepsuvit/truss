@@ -1,6 +1,6 @@
 <div class="transput">
     <div class="input-port">
-        <lib-port [name]="name" [color]="color"></lib-port>
+        <lib-port [name]="name" [color]="color" [type]="type" [nodeId]="nodeId" [isInput]="true"></lib-port>
     </div>
     <ng-container *ngFor="let control of controls">
         <lib-control [label]="control.label" [type]="control.type" [options]="control.options" [placeholder]="control.placeholder"></lib-control>

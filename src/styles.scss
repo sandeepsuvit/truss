@@ -7,3 +7,10 @@
 body {
     font-family: Consolas, monaco, monospace;
 }
+
+.dragWrapper {
+    z-index: 9999;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}

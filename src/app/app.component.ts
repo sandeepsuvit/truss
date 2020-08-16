@@ -21,7 +21,7 @@ export class AppComponent {
           placeholder: 'Select a field',
           options: [
             { value: 'fjwnaiw', label: 'Type of Limited Liability Company', description: 'FILING_SUBTYPE_ID - Dropdown' },
-            { value: 'lk2li21', label: 'The appointment of the registered agent listed above is an affirmation by the represented entity that the agent has consented to serve as a registered agent.', description: 'ATTESTATION - Checkbox' },
+            { value: 'lk2li21', label: 'The appointment of the registered agent.', description: 'ATTESTATION - Checkbox' },
             { value: 'vnalk13', label: 'Organizers', description: 'ORGANIZERS_PARTY_LIST - Repeater' }
           ]
         }
@@ -116,14 +116,27 @@ export class AppComponent {
           label: 'Business Rules'
         }
       ]
-    }
+    },
+    textValueEquals: {
+      label: 'Text Value Equals',
+      inputs: [
+        { type: 'string' }
+      ],
+      outputs: [
+        {
+          type: 'string',
+          name: 'output',
+          label: 'Text'
+        }
+      ]
+    },
   };
 
   nodes = {
     io3daf9: {
       id: 'io3daf9',
       type: 'output',
-      x: 900,
+      x: 500,
       y: 240,
       width: 200,
       height: 300,
@@ -153,17 +166,19 @@ export class AppComponent {
               portName: 'output'
             }
           ]
-        }
+        },
+        outputs: {}
       }
     },
     rriwo92: {
       id: 'rriwo92',
       type: 'fieldValueEquals',
-      x: 550,
+      x: 150,
       y: 500,
       width: 200,
       height: 300,
       connections: {
+        inputs: {},
         outputs: {
           output: [
             {
@@ -177,11 +192,12 @@ export class AppComponent {
     alkjlnq: {
       id: 'alkjlnq',
       type: 'fieldValueEquals',
-      x: 400,
+      x: 100,
       y: 350,
       width: 200,
       height: 300,
       connections: {
+        inputs: {},
         outputs: {
           output: [
             {
@@ -199,11 +215,12 @@ export class AppComponent {
     vmkld29: {
       id: 'vmkld29',
       type: 'fieldValueEquals',
-      x: 550,
+      x: 150,
       y: 200,
       width: 200,
       height: 300,
       connections: {
+        inputs: {},
         outputs: {
           output: [
             {
@@ -211,6 +228,43 @@ export class AppComponent {
               portName: 'visible'
             }
           ]
+        }
+      }
+    },
+    sandld29: {
+      id: 'sandld29',
+      type: 'textValueEquals',
+      x: 285,
+      y: 30,
+      width: 200,
+      height: 300,
+      connections: {
+        inputs: {},
+        outputs: {}
+      }
+    },
+    sandld30: {
+      id: 'sandld30',
+      type: 'textValueEquals',
+      x: 30,
+      y: 70,
+      width: 200,
+      height: 300,
+      connections: {
+        inputs: {},
+        outputs: {}
+      }
+    },
+    vmkld30: {
+      id: 'vmkld30',
+      type: 'fieldValueEquals',
+      x: 523,
+      y: 81,
+      width: 200,
+      height: 300,
+      connections: {
+        inputs: {},
+        outputs: {
         }
       }
     }

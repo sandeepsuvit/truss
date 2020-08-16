@@ -10,17 +10,18 @@ export class InputComponent implements OnInit {
   @Input() name: any;
   @Input() label: any;
   @Input() type: any;
+  @Input() nodeId: any;
 
   defaultLabel = 'Not applicable';
   color: string;
   controls = [];
 
   constructor(
-    private trussContext: TrussContextService,
+    private context: TrussContextService,
   ) { }
 
   ngOnInit(): void {
-    const { label: defaultLabel, color, controls = [] } = this.trussContext.inputTypes[this.type] || {};
+    const { label: defaultLabel, color, controls = [] } = this.context.inputTypes[this.type] || {};
     this.color = color;
     this.controls = controls;
   }

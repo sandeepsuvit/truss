@@ -12,9 +12,6 @@ export class NodeComponent implements OnInit {
   @ViewChild('nodeWrapper') nodeWrapper: ElementRef;
 
   @Input() id: any; // Unique identifier
-  // Reference for the workspace
-  @Input() workspaceRect: DOMRect;
-
   // Node based properties
   @Input() width: number;
   @Input() height: number;
@@ -34,11 +31,11 @@ export class NodeComponent implements OnInit {
   isDragging = false;
 
   constructor(
-    private trussContext: TrussContextService,
+    private context: TrussContextService,
   ) { }
 
   ngOnInit(): void {
-    const { nodeTypes, inputTypes } = this.trussContext;
+    const { nodeTypes, inputTypes } = this.context;
 
     // Initialize the coordinates on load
     this.startCoordinates = this.coordinates = { x: this.x, y: this.y };
@@ -84,10 +81,10 @@ export class NodeComponent implements OnInit {
 
         const cnt: SVGLineElement = document.querySelector(`[data-connection-id="${combined}"]`);
 
-        cnt.x1.baseVal.value = toRect.x - this.workspaceRect.x + portHalf;
-        cnt.y1.baseVal.value = toRect.y - this.workspaceRect.y + portHalf;
-        cnt.x2.baseVal.value = fromRect.x - this.workspaceRect.x + portHalf;
-        cnt.y2.baseVal.value = fromRect.y - this.workspaceRect.y + portHalf;
+        cnt.x1.baseVal.value = toRect.x - this.context.workspaceRect.x + portHalf;
+        cnt.y1.baseVal.value = toRect.y - this.context.workspaceRect.y + portHalf;
+        cnt.x2.baseVal.value = fromRect.x - this.context.workspaceRect.x + portHalf;
+        cnt.y2.baseVal.value = fromRect.y - this.context.workspaceRect.y + portHalf;
       });
     });
   }
@@ -113,8 +110,8 @@ export class NodeComponent implements OnInit {
    */
   private updateCoordinates = (event: any) => {
     this.coordinates = {
-      x: event.clientX - this.workspaceRect.left - this.offset.x,
-      y: event.clientY - this.workspaceRect.top - this.offset.y,
+      x: event.clientX - this.context.workspaceRect.left - this.offset.x,
+      y: event.clientY - this.context.workspaceRect.top - this.offset.y,
     };
 
     this.updateNodeConnections();
@@ -128,8 +125,8 @@ export class NodeComponent implements OnInit {
    */
   private stopDrag = (event: any) => {
     this.coordinates = {
-      x: event.clientX - this.workspaceRect.left - this.offset.x,
-      y: event.clientY - this.workspaceRect.top - this.offset.y,
+      x: event.clientX - this.context.workspaceRect.left - this.offset.x,
+      y: event.clientY - this.context.workspaceRect.top - this.offset.y,
     };
 
     this.isDragging = false;

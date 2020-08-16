@@ -1,6 +1,6 @@
-<div #workspace id="__truss_workspace__" class="wrapper">
+<div #workspaceWrapper id="__truss_workspace__" class="wrapper">
     <ng-container *ngFor="let item of nodes | keyvalue">
-        <lib-node [workspaceRect]="workspaceRect" [id]="item.key" [width]="item.value.width" [height]="item.value.height" [x]="item.value.x" [y]="item.value.y" [connections]="item.value.connections" [type]="item.value.type"></lib-node>
+        <lib-node [id]="item.key" [width]="item.value.width" [height]="item.value.height" [x]="item.value.x" [y]="item.value.y" [connections]="item.value.connections" [type]="item.value.type"></lib-node>
     </ng-container>
 
     <!-- Render the connections -->
@@ -15,4 +15,7 @@
             </ng-container>
         </ng-container>
     </ng-container>
+
+    <!-- temporary container to store the current dragging connection -->
+    <div id="__node_editor_drag_connection__" class="dragWrapper"></div>
 </div>
